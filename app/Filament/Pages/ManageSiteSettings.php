@@ -3,49 +3,70 @@
 namespace App\Filament\Pages;
 
 use App\Models\SiteSetting;
+use BackedEnum;
 use Filament\Forms\Components\FileUpload;
-use Filament\Schemas\Components\Section;
 use Filament\Forms\Components\TextInput;
-use Filament\Forms\Concerns\InteractsWithForms;
-use Filament\Forms\Contracts\HasForms;
 use Filament\Notifications\Notification;
 use Filament\Pages\Page;
+use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
-use BackedEnum;
 
-class ManageSiteSettings extends Page implements HasForms
+class ManageSiteSettings extends Page
 {
-    use InteractsWithForms;
+    protected static string|BackedEnum|null $navigationIcon =
+        'heroicon-o-cog-6-tooth';
 
-    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-cog-6-tooth';
     protected static ?string $navigationLabel = 'Site Settings';
-    protected string $view = 'filament.pages.manage-site-settings';
+
     protected static ?string $title = 'Site Settings';
+
+    protected string $view = 'filament.pages.manage-site-settings';
 
     public ?array $data = [];
 
     public function mount(): void
     {
-        $settings = SiteSetting::all()->pluck('value', 'key')->toArray();
+        $settings = SiteSetting::query()
+            ->get(['key', 'value'])
+            ->pluck('value', 'key')
+            ->all();
+
+        // Default apabila brand_name belum pernah disimpan.
+        $settings['brand_name'] ??= 'Vantier';
+
         $this->form->fill($settings);
     }
 
-    public function form(Schema $form): Schema
+    public function form(Schema $schema): Schema
     {
-        return $form
+        return $schema
             ->schema([
                 Section::make('General')
                     ->schema([
-                        TextInput::make('brand_name')->required(),
+                        TextInput::make('brand_name')
+                            ->label('Brand Name')
+                            ->required()
+                            ->maxLength(100),
+
                         FileUpload::make('logo')
+                            ->label('Logo')
                             ->image()
                             ->disk('public')
-                            ->directory('settings'),
+                            ->directory('settings')
+                            ->visibility('public'),
                     ]),
+
                 Section::make('Contact')
                     ->schema([
-                        TextInput::make('whatsapp_number'),
-                        TextInput::make('email')->email(),
+                        TextInput::make('whatsapp_number')
+                            ->label('WhatsApp Number')
+                            ->tel()
+                            ->maxLength(30),
+
+                        TextInput::make('email')
+                            ->label('Email')
+                            ->email()
+                            ->maxLength(255),
                     ]),
             ])
             ->statePath('data');
@@ -53,17 +74,23 @@ class ManageSiteSettings extends Page implements HasForms
 
     public function save(): void
     {
+        // getState() menjalankan validasi form Filament.
         $data = $this->form->getState();
 
         foreach ($data as $key => $value) {
-            SiteSetting::updateOrCreate(
-                ['key' => $key],
-                ['value' => $value ?? null]
+            SiteSetting::query()->updateOrCreate(
+                [
+                    'key' => $key,
+                ],
+                [
+                    'value' => $value,
+                    'type' => is_array($value) ? 'json' : 'string',
+                ],
             );
         }
 
         Notification::make()
-            ->title('Settings updated successfully')
+            ->title('Site settings berhasil diperbarui')
             ->success()
             ->send();
     }
