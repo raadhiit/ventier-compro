@@ -7,6 +7,7 @@ use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Schemas\Schema;
@@ -78,6 +79,28 @@ class ProductForm
                     ->label('Published At')
                     ->helperText('Kosongkan jika belum ingin tayang.')
                     ->columnSpan(1),
+                Repeater::make('images')
+                    ->relationship('images')
+                    ->schema([
+                        FileUpload::make('image_path')
+                            ->label('Image')
+                            ->image()
+                            ->disk('public')
+                            ->visibility('public')
+                            ->directory('products/gallery')
+                            ->required(),
+                        TextInput::make('alt_text')
+                            ->label('Alt Text')
+                            ->helperText('Deskripsi singkat gambar untuk aksesibilitas.')
+                            ->maxLength(255),
+                        TextInput::make('sort_order')
+                            ->label('Sort Order')
+                            ->numeric()
+                            ->default(0),
+                    ])
+                    ->columns(3)
+                    ->reorderable()
+                    ->columnSpan(3),
             ]);
     }
 }
