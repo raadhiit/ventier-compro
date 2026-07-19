@@ -13,6 +13,7 @@ use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
+use UnitEnum;
 
 class PageContentResource extends Resource
 {
@@ -22,6 +23,8 @@ class PageContentResource extends Resource
     Heroicon::OutlinedDocumentText;
 
     protected static ?string $navigationLabel = 'Page Contents';
+
+    protected static string|UnitEnum|null $navigationGroup = 'Content';
 
     protected static ?string $modelLabel = 'Page Content';
 

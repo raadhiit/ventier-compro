@@ -12,6 +12,7 @@ use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
+use UnitEnum;
 
 class ContactMessageResource extends Resource
 {
@@ -20,6 +21,8 @@ class ContactMessageResource extends Resource
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedInboxStack;
 
     protected static ?string $navigationLabel = 'Contact Messages';
+
+    protected static string|UnitEnum|null $navigationGroup = 'Inbox';
 
     public static function form(Schema $schema): Schema
     {
