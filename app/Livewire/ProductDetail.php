@@ -14,20 +14,33 @@ class ProductDetail extends Component
 
     public function mount(Product $product): void
     {
-        abort_unless($product->status === 'published', 404);
-
-        $this->product = $product->load(['category', 'images']);
+        $this->product = Product::query()
+            ->published()
+            ->with([
+                'category',
+                'images',
+            ])
+            ->firstOrFail($product->getKey());
     }
 
     public function render(): View
     {
         $relatedProducts = Product::query()
-            ->where('status', 'published')
-            ->whereKeyNot($this->product->id)
-            ->when($this->product->product_category_id, fn ($q) => $q->where('product_category_id', $this->product->product_category_id))
+            ->published()
+            ->whereKeyNot($this->product->getKey())
+            ->when(
+                $this->product->product_category_id,
+                fn ($query) => $query->where(
+                    'product_category_id',
+                    $this->product->product_category_id,
+                ),
+            )
             ->limit(3)
             ->get();
 
-        return view('livewire.product-detail', compact('relatedProducts'));
+        return view(
+            'livewire.product-detail',
+            compact('relatedProducts'),
+        );
     }
 }
