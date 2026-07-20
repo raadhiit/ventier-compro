@@ -2,10 +2,10 @@
 
 namespace App\Filament\Resources\ContactMessages\Tables;
 
-use Filament\Actions\DeleteAction;
-use Filament\Actions\EditAction;
 use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
+use Filament\Actions\EditAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
@@ -32,6 +32,7 @@ class ContactMessagesTable
                         'in_progress' => 'warning',
                         'resolved' => 'success',
                         'spam' => 'danger',
+                        default => 'gray',
                     }),
                 TextColumn::make('created_at')
                     ->dateTime()

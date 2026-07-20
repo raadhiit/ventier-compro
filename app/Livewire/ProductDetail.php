@@ -3,6 +3,7 @@
 namespace App\Livewire;
 
 use App\Models\Product;
+use Illuminate\Contracts\View\View;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
 
@@ -18,12 +19,12 @@ class ProductDetail extends Component
         $this->product = $product->load(['category', 'images']);
     }
 
-    public function render()
+    public function render(): View
     {
         $relatedProducts = Product::query()
             ->where('status', 'published')
             ->whereKeyNot($this->product->id)
-            ->when($this->product->product_category_id, fn($q) => $q->where('product_category_id', $this->product->product_category_id))
+            ->when($this->product->product_category_id, fn ($q) => $q->where('product_category_id', $this->product->product_category_id))
             ->limit(3)
             ->get();
 

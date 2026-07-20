@@ -49,6 +49,9 @@ class PageContent extends Model
         ];
     }
 
+    /**
+     * @return array<string, string>
+     */
     public static function sectionOptions(?string $pageKey): array
     {
         if (! $pageKey) {

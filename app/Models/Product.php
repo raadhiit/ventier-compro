@@ -52,13 +52,19 @@ class Product extends Model
         });
     }
 
+    /** @return BelongsTo<ProductCategory, $this> */
     public function category(): BelongsTo
     {
-        return $this->belongsTo(ProductCategory::class, 'product_category_id');
+        return $this->belongsTo(
+            ProductCategory::class,
+            'product_category_id',
+        );
     }
 
+    /** @return HasMany<ProductImage, $this> */
     public function images(): HasMany
     {
-        return $this->hasMany(ProductImage::class)->orderBy('sort_order');
+        return $this->hasMany(ProductImage::class)
+            ->orderBy('sort_order');
     }
 }

@@ -2,9 +2,9 @@
 
 namespace App\Filament\Resources\PageContents;
 
+use App\Filament\Resources\PageContents\Pages\CreatePageContent;
 use App\Filament\Resources\PageContents\Pages\EditPageContent;
 use App\Filament\Resources\PageContents\Pages\ListPageContents;
-use App\Filament\Resources\PageContents\Pages\CreatePageContent;
 use App\Filament\Resources\PageContents\Schemas\PageContentForm;
 use App\Filament\Resources\PageContents\Tables\PageContentsTable;
 use App\Models\PageContent;
@@ -20,7 +20,7 @@ class PageContentResource extends Resource
     protected static ?string $model = PageContent::class;
 
     protected static string|BackedEnum|null $navigationIcon =
-    Heroicon::OutlinedDocumentText;
+        Heroicon::OutlinedDocumentText;
 
     protected static ?string $navigationLabel = 'Page Contents';
 

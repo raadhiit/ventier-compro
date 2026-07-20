@@ -37,6 +37,7 @@ class ProductsTable
                         'draft' => 'gray',
                         'published' => 'success',
                         'archived' => 'warning',
+                        default => 'gray',
                     })
                     ->searchable(),
                 IconColumn::make('is_featured')
@@ -88,4 +89,3 @@ class ProductsTable
             ]);
     }
 }
-

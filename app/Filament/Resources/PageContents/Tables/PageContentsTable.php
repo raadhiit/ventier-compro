@@ -26,8 +26,7 @@ class PageContentsTable
                     ->label('Page')
                     ->badge()
                     ->formatStateUsing(
-                        fn (string $state): string =>
-                            PageContent::PAGE_OPTIONS[$state] ?? $state
+                        fn (string $state): string => PageContent::PAGE_OPTIONS[$state] ?? $state
                     )
                     ->sortable(),
 

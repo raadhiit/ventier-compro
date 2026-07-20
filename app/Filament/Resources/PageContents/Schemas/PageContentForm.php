@@ -11,9 +11,9 @@ use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Schemas\Components\Section;
-use Filament\Schemas\Schema;
 use Filament\Schemas\Components\Utilities\Get;
 use Filament\Schemas\Components\Utilities\Set;
+use Filament\Schemas\Schema;
 
 class PageContentForm
 {
@@ -41,15 +41,13 @@ class PageContentForm
                         Select::make('section_key')
                             ->label('Section')
                             ->options(
-                                fn(Get $get): array =>
-                                PageContent::sectionOptions(
+                                fn (Get $get): array => PageContent::sectionOptions(
                                     $get('page_key')
                                 )
                             )
                             ->required()
                             ->disabled(
-                                fn(Get $get): bool =>
-                                blank($get('page_key'))
+                                fn (Get $get): bool => blank($get('page_key'))
                             ),
                     ])
                     ->columns(2)
@@ -151,8 +149,7 @@ class PageContentForm
                             ->reorderable()
                             ->collapsible()
                             ->itemLabel(
-                                fn(array $state): ?string =>
-                                $state['title'] ?? null
+                                fn (array $state): ?string => $state['title'] ?? null
                             )
                             ->columnSpanFull(),
                     ])

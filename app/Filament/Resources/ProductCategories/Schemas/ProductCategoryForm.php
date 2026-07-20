@@ -18,7 +18,7 @@ class ProductCategoryForm
                 TextInput::make('name')
                     ->required()
                     ->live(onBlur: true)
-                    ->afterStateUpdated(fn($state, $set) => $set('slug', Str::slug($state)))
+                    ->afterStateUpdated(fn ($state, $set) => $set('slug', Str::slug($state)))
                     ->columnSpan(1),
                 TextInput::make('slug')
                     ->required()
