@@ -26,6 +26,11 @@ class ManageSiteSettings extends Page
     /** @var array<string, mixed> */
     public array $data = [];
 
+    public static function canAccess(): bool
+    {
+        return auth()->user()?->isSuperAdmin() ?? false;
+    }
+
     public function mount(): void
     {
         $settings = SiteSetting::query()
