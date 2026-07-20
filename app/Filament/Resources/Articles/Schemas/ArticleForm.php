@@ -22,7 +22,7 @@ class ArticleForm
                 TextInput::make('title')
                     ->required()
                     ->live(onBlur: true)
-                    ->afterStateUpdated(fn($state, $set) => $set('slug', Str::slug($state)))
+                    ->afterStateUpdated(fn ($state, $set) => $set('slug', Str::slug($state)))
                     ->columnSpan(2),
                 TextInput::make('slug')
                     ->required()
@@ -57,12 +57,11 @@ class ArticleForm
                             ->default('draft'),
                         DateTimePicker::make('published_at')
                             ->label('Published At'),
-                            ]),
+                    ]),
                 Toggle::make('is_featured')
                     ->label('Featured')
                     ->inline(true)
                     ->helperText('Akan menampilkan artikel ini di halaman utama jika diaktifkan.'),
-                ]);
+            ]);
     }
 }
-

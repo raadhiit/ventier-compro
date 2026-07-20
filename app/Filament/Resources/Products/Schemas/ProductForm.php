@@ -4,10 +4,10 @@ namespace App\Filament\Resources\Products\Schemas;
 
 use App\Models\ProductCategory;
 use Filament\Forms\Components\DateTimePicker;
-use Filament\Forms\Components\RichEditor;
-use Filament\Forms\Components\Select;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Repeater;
+use Filament\Forms\Components\RichEditor;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Schemas\Schema;
@@ -22,14 +22,18 @@ class ProductForm
             ->components([
                 Select::make('product_category_id')
                     ->label('Category')
-                    ->options(ProductCategory::all()->pluck('name', 'id'))
+                    ->options(
+                        ProductCategory::query()
+                            ->orderBy('name')
+                            ->pluck('name', 'id')
+                    )
                     ->searchable()
                     ->nullable()
                     ->columnSpan(1),
                 TextInput::make('name')
                     ->required()
                     ->live(onBlur: true)
-                    ->afterStateUpdated(fn($state, $set) => $set('slug', Str::slug($state)))
+                    ->afterStateUpdated(fn ($state, $set) => $set('slug', Str::slug($state)))
                     ->columnSpan(1),
                 TextInput::make('slug')
                     ->required()

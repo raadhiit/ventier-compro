@@ -3,11 +3,14 @@
 namespace App\Livewire;
 
 use App\Models\HomeSection;
+use Illuminate\Contracts\View\View;
+use Illuminate\Database\Eloquent\Collection;
 use Livewire\Component;
 
 class Home extends Component
 {
-    public $sections;
+    /** @var Collection<int, HomeSection> */
+    public Collection $sections;
 
     public function mount(): void
     {
@@ -17,7 +20,7 @@ class Home extends Component
             ->get();
     }
 
-    public function render()
+    public function render(): View
     {
         return view('livewire.home')
             ->layout('layouts.public');

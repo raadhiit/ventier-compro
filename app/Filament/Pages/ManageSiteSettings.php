@@ -10,6 +10,7 @@ use Filament\Notifications\Notification;
 use Filament\Pages\Page;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
+use LogicException;
 
 class ManageSiteSettings extends Page
 {
@@ -22,19 +23,20 @@ class ManageSiteSettings extends Page
 
     protected string $view = 'filament.pages.manage-site-settings';
 
-    public ?array $data = [];
+    /** @var array<string, mixed> */
+    public array $data = [];
 
     public function mount(): void
     {
         $settings = SiteSetting::query()
-            ->get(['key', 'value'])
             ->pluck('value', 'key')
             ->all();
 
         // Default apabila brand_name belum pernah disimpan.
         $settings['brand_name'] ??= 'Vantier';
 
-        $this->form->fill($settings);
+        // $this->form->fill($settings);
+        $this->siteSettingsForm()->fill($settings);
     }
 
     public function form(Schema $schema): Schema
@@ -75,7 +77,8 @@ class ManageSiteSettings extends Page
     public function save(): void
     {
         // getState() menjalankan validasi form Filament.
-        $data = $this->form->getState();
+        // $data = $this->form->getState();
+        $data = $this->siteSettingsForm()->getState();
 
         foreach ($data as $key => $value) {
             SiteSetting::query()->updateOrCreate(
@@ -93,5 +96,13 @@ class ManageSiteSettings extends Page
             ->title('Site settings berhasil diperbarui')
             ->success()
             ->send();
+    }
+
+    private function siteSettingsForm(): Schema
+    {
+        return $this->getSchema('form')
+            ?? throw new LogicException(
+                'Site settings form is not initialized.',
+            );
     }
 }

@@ -3,16 +3,23 @@
 namespace App\Livewire;
 
 use App\Models\ContactMessage;
+use Illuminate\Contracts\View\View;
 use Livewire\Component;
 
 class ContactForm extends Component
 {
     public string $name = '';
+
     public string $phone = '';
+
     public string $email = '';
+
     public string $subject = '';
+
     public string $message = '';
+
     public string $website = '';
+
     public bool $sent = false;
 
     public function submit(): void
@@ -40,7 +47,7 @@ class ContactForm extends Component
         $this->sent = true;
     }
 
-    public function render()
+    public function render(): View
     {
         return view('livewire.contact-form');
     }

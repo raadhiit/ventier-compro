@@ -37,6 +37,7 @@ class ArticlesTable
                         'draft' => 'gray',
                         'published' => 'success',
                         'archived' => 'warning',
+                        default => 'gray',
                     })
                     ->searchable(),
                 TextColumn::make('published_at')

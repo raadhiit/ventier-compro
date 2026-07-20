@@ -41,7 +41,7 @@ class UserForm
                 Toggle::make('is_active')
                     ->label('Active')
                     ->default(true)
-                    ->colSpan(1),
+                    ->columnSpan(1),
             ]);
     }
 }
