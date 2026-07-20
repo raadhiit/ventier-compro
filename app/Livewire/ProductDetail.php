@@ -20,7 +20,7 @@ class ProductDetail extends Component
                 'category',
                 'images',
             ])
-            ->findOrFail($product->getKey());
+            ->firstOrFail($product->getKey());
     }
 
     public function render(): View

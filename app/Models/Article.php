@@ -53,6 +53,9 @@ class Article extends Model
         return $this->belongsTo(User::class, 'author_id');
     }
 
+    /**
+     * @param  Builder<Article>  $query
+     */
     #[Scope]
     protected function published(Builder $query): void
     {

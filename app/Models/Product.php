@@ -70,6 +70,9 @@ class Product extends Model
             ->orderBy('sort_order');
     }
 
+    /**
+     * @param  Builder<Product>  $query
+     */
     #[Scope]
     protected function published(Builder $query): void
     {
