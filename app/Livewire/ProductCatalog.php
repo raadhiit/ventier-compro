@@ -38,7 +38,7 @@ class ProductCatalog extends Component
     public function render(): View
     {
         $products = Product::query()
-            ->where('status', 'published')
+            ->published()
             ->when($this->search, fn ($q) => $q->where(function ($q) {
                 $q->where('name', 'like', "%{$this->search}%")
                     ->orWhere('slug', 'like', "%{$this->search}%")

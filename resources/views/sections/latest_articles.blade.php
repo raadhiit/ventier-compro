@@ -1,4 +1,12 @@
-<?php $articles = \App\Models\Article::query()->where('status', 'published')->latest('published_at')->limit((int) ($section->settings['limit'] ?? 3))->get(); ?>
+<?php
+
+$articles = \App\Models\Article::query()
+    ->published()
+    ->latest('published_at')
+    ->limit((int) ($section->settings['limit'] ?? 3))
+    ->get();
+
+?>
 <section class="py-20 px-5 bg-white">
     <div class="max-w-[1262px] mx-auto">
         @if($section->title)

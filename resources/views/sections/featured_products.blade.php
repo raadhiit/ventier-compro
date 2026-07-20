@@ -1,4 +1,13 @@
-<?php $products = \App\Models\Product::query()->where('status', 'published')->where('is_featured', true)->orderBy('sort_order')->limit((int) ($section->settings['limit'] ?? 6))->get(); ?>
+<?php
+
+$products = \App\Models\Product::query()
+    ->published()
+    ->where('is_featured', true)
+    ->orderBy('sort_order')
+    ->limit((int) ($section->settings['limit'] ?? 6))
+    ->get();
+
+?>
 <section class="py-20 px-5 bg-surface-warm">
     <div class="max-w-[1262px] mx-auto">
         @if($section->title)
