@@ -25,7 +25,7 @@
         <footer class="bg-brand-black text-white py-16 px-5">
             <div class="max-w-[1262px] mx-auto grid gap-10 md:grid-cols-4">
                 <div>
-                    <h4 class="font-semibold text-sm text-white/80 mb-4 uppercase tracking-wider">Ventier</h4>
+                    <h4 class="font-semibold text-sm text-white/80 mb-4 uppercase tracking-wider">Vantier</h4>
                     <p class="text-sm text-white/40 leading-relaxed">Furnitur premium untuk kenyamanan berkendara Anda.</p>
                 </div>
                 <div>

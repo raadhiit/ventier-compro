@@ -3,7 +3,7 @@
         <div class="max-w-[1262px] mx-auto">
             <div class="mb-10 max-w-2xl" x-intersect="$el.style.opacity = 1" style="opacity: 0; transition: opacity 0.6s ease-out">
                 <h1 class="text-[40px] sm:text-[48px] font-semibold leading-[1.1]">Product Catalog</h1>
-                <p class="mt-4 text-[17px] leading-[28px] text-text-secondary">Explore Ventier products designed with precision, comfort, and vehicle-specific fit.</p>
+                <p class="mt-4 text-[17px] leading-[28px] text-text-secondary">Explore Vantier products designed with precision, comfort, and vehicle-specific fit.</p>
             </div>
 
             <div class="mb-8 grid gap-4 md:grid-cols-[1fr_240px]" x-intersect="$el.style.opacity = 1" style="opacity: 0; transition: opacity 0.6s ease-out 0.1s">

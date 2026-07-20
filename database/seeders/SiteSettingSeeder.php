@@ -10,11 +10,11 @@ class SiteSettingSeeder extends Seeder
     public function run(): void
     {
         $settings = [
-            'brand_name' => 'Ventier',
+            'brand_name' => 'Vantier',
             'whatsapp_number' => '+6281234567890',
-            'email' => 'hello@ventier.com',
-            'default_seo_title' => 'Ventier - Furnitur Premium untuk Kendaraan Anda',
-            'default_seo_description' => 'Ventier menghadirkan produk interior berkendara premium dengan desain presisi dan kualitas terbaik.',
+            'email' => 'hello@Vantier.com',
+            'default_seo_title' => 'Vantier - Furnitur Premium untuk Kendaraan Anda',
+            'default_seo_description' => 'Vantier menghadirkan produk interior berkendara premium dengan desain presisi dan kualitas terbaik.',
         ];
 
         foreach ($settings as $key => $value) {
