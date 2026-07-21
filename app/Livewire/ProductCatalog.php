@@ -28,6 +28,18 @@ class ProductCatalog extends Component
         $this->resetPage();
     }
 
+    public function selectCategory(?string $category): void
+    {
+        $this->category = $category;
+        $this->resetPage();
+    }
+
+    public function resetFilters(): void
+    {
+        $this->reset(['search', 'category']);
+        $this->resetPage();
+    }
+
     public function loadMore(): void
     {
         $this->perPage += 12;
@@ -37,16 +49,22 @@ class ProductCatalog extends Component
     {
         $products = Product::query()
             ->published()
-            ->when($this->search, fn ($q) => $q->where(function ($q) {
-                $q->where('name', 'like', "%{$this->search}%")
+            ->with('category')
+            ->when($this->search, fn ($query) => $query->where(function ($query) {
+                $query->where('name', 'like', "%{$this->search}%")
                     ->orWhere('slug', 'like', "%{$this->search}%")
                     ->orWhere('short_description', 'like', "%{$this->search}%");
             }))
-            ->when($this->category, fn ($q) => $q->where('product_category_id', $this->category))
+            ->when($this->category, fn ($query) => $query->where('product_category_id', $this->category))
+            ->orderByDesc('is_featured')
+            ->orderBy('sort_order')
             ->latest()
             ->paginate($this->perPage);
 
-        $categories = ProductCategory::where('is_active', true)->get();
+        $categories = ProductCategory::query()
+            ->where('is_active', true)
+            ->orderBy('sort_order')
+            ->get();
 
         return view('livewire.product-catalog', compact('products', 'categories'))
             ->layout(
