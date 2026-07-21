@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\HomeSections\Schemas;
 
+use App\Models\HomeSection;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\KeyValue;
 use Filament\Forms\Components\RichEditor;
@@ -19,12 +20,7 @@ class HomeSectionForm
             ->components([
                 Select::make('section_key')
                     ->label('Section')
-                    ->options([
-                        'hero' => 'Hero Banner',
-                        'featured_products' => 'Featured Products',
-                        'about_preview' => 'About Preview',
-                        'cta' => 'Call to Action',
-                    ])
+                    ->options(HomeSection::sectionOptions())
                     ->required()
                     ->helperText('Pilih bagian homepage yang ingin diatur.')
                     ->columnSpan(1),

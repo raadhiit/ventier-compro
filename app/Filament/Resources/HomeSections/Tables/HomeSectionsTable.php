@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\HomeSections\Tables;
 
+use App\Models\HomeSection;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
@@ -41,12 +42,7 @@ class HomeSectionsTable
             ])
             ->filters([
                 SelectFilter::make('section_key')
-                    ->options([
-                        'hero' => 'Hero Banner',
-                        'featured_products' => 'Featured Products',
-                        'about_preview' => 'About Preview',
-                        'cta' => 'Call to Action',
-                    ]),
+                    ->options(HomeSection::sectionOptions()),
                 SelectFilter::make('is_visible')
                     ->options([
                         '1' => 'Visible',

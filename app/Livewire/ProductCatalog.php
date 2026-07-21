@@ -5,11 +5,9 @@ namespace App\Livewire;
 use App\Models\Product;
 use App\Models\ProductCategory;
 use Illuminate\Contracts\View\View;
-use Livewire\Attributes\Layout;
 use Livewire\Component;
 use Livewire\WithPagination;
 
-#[Layout('layouts.public')]
 class ProductCatalog extends Component
 {
     use WithPagination;
@@ -50,6 +48,13 @@ class ProductCatalog extends Component
 
         $categories = ProductCategory::where('is_active', true)->get();
 
-        return view('livewire.product-catalog', compact('products', 'categories'));
+        return view('livewire.product-catalog', compact('products', 'categories'))
+            ->layout(
+                'layouts.public',
+                [
+                    'title' => 'Products',
+                    'description' => 'Browse premium automotive car mats designed for protection, comfort, and precise vehicle fit.',
+                ],
+            );
     }
 }
