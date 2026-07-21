@@ -7,20 +7,30 @@
             <p class="mx-auto mt-4 max-w-2xl text-center text-[17px] leading-[28px] text-text-secondary" data-reveal>{{ $section->subtitle }}</p>
         @endif
         @if($products->isNotEmpty())
-            <div class="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+            <div class="mt-12 grid gap-6 lg:grid-cols-2">
                 @foreach($products as $product)
-                    <article wire:key="home-featured-product-{{ $product->id }}" class="group overflow-hidden rounded-2xl border border-border-sand bg-white transition-all duration-500 hover:-translate-y-1 hover:shadow-xl hover:shadow-black/5" data-reveal>
-                        <a href="{{ route('products.show', $product) }}" wire:navigate class="block aspect-[4/3] overflow-hidden bg-surface-muted">
+                    <article wire:key="home-featured-product-{{ $product->id }}" @class([
+                        'group overflow-hidden rounded-[2rem] border border-border-sand bg-white transition-all duration-500 hover:-translate-y-1 hover:shadow-xl hover:shadow-black/5',
+                        'lg:row-span-2' => $loop->first,
+                    ]) data-reveal>
+                        <a href="{{ route('products.show', $product) }}" wire:navigate @class([
+                            'block overflow-hidden bg-surface-muted',
+                            'aspect-[4/3] lg:aspect-auto lg:h-[560px]' => $loop->first,
+                            'aspect-[16/9] lg:h-[250px]' => ! $loop->first,
+                        ])>
                             @if($product->thumbnail_path)
-                                <img src="{{ Storage::disk('public')->url($product->thumbnail_path) }}" alt="{{ $product->name }}" loading="lazy" class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105">
+                                <img src="{{ Storage::disk('public')->url($product->thumbnail_path) }}" alt="{{ $product->name }}" width="1200" height="1500" loading="lazy" class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105">
+                            @else
+                                <div class="grid h-full place-items-center bg-[radial-gradient(circle_at_top,_rgba(183,154,99,0.2),_transparent_45%),linear-gradient(180deg,_#262626_0%,_#171717_100%)] p-8 text-center text-sm text-white/55">Product visual</div>
                             @endif
                         </a>
-                        <div class="p-6">
-                            <h3 class="text-xl font-semibold leading-snug">{{ $product->name }}</h3>
+                        <div @class(['p-7', 'lg:p-9' => $loop->first])>
+                            <p class="text-xs font-semibold uppercase tracking-[0.28em] text-champagne-dark">Featured product</p>
+                            <h3 @class(['mt-3 font-semibold leading-snug text-text-primary', 'text-3xl' => $loop->first, 'text-xl' => ! $loop->first])>{{ $product->name }}</h3>
                             @if($product->short_description)
-                                <p class="mt-3 text-sm leading-relaxed text-text-secondary">{{ $product->short_description }}</p>
+                                <p class="mt-3 max-w-xl text-sm leading-7 text-text-secondary">{{ $product->short_description }}</p>
                             @endif
-                            <a href="{{ route('products.show', $product) }}" wire:navigate class="mt-5 inline-block text-sm font-semibold text-champagne transition-colors hover:text-champagne-hover">View detail →</a>
+                            <a href="{{ route('products.show', $product) }}" wire:navigate class="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-champagne-dark transition-colors hover:text-champagne-hover">View detail <span aria-hidden="true">→</span></a>
                         </div>
                     </article>
                 @endforeach
