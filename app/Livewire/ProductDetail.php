@@ -4,10 +4,8 @@ namespace App\Livewire;
 
 use App\Models\Product;
 use Illuminate\Contracts\View\View;
-use Livewire\Attributes\Layout;
 use Livewire\Component;
 
-#[Layout('layouts.public')]
 class ProductDetail extends Component
 {
     public Product $product;
@@ -20,7 +18,8 @@ class ProductDetail extends Component
                 'category',
                 'images',
             ])
-            ->firstOrFail($product->getKey());
+            ->whereKey($product->getKey())
+            ->firstOrFail();
     }
 
     public function render(): View
@@ -41,6 +40,14 @@ class ProductDetail extends Component
         return view(
             'livewire.product-detail',
             compact('relatedProducts'),
+        )->layout(
+            'layouts.public',
+            [
+                'title' => $this->product->seo_title ?: $this->product->name,
+                'description' => $this->product->seo_description ?: $this->product->short_description,
+                'image' => $this->product->thumbnail_path,
+                'ogType' => 'product',
+            ],
         );
     }
 }

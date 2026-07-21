@@ -1,8 +1,12 @@
+@php
+    $brandName = $siteSettings['brand_name'];
+@endphp
+
 <div>
     @if($sent)
-        <div class="p-6 bg-champagne-soft rounded-2xl text-text-primary">
-            <p class="font-semibold text-lg">Message sent successfully</p>
-            <p class="mt-2">Thank you for contacting Vantier. We will respond as soon as possible.</p>
+        <div class="rounded-2xl bg-champagne-soft p-6 text-text-primary">
+            <p class="text-lg font-semibold">Message sent successfully</p>
+            <p class="mt-2">Thank you for contacting {{ $brandName }}. We will respond as soon as possible.</p>
         </div>
     @else
         <form wire:submit="submit" class="space-y-6">
