@@ -17,6 +17,7 @@ class AboutPage extends Component
         $this->sections = PageContent::query()
             ->where('page_key', 'about')
             ->where('is_visible', true)
+            ->whereIn('section_key', array_keys(PageContent::SECTION_OPTIONS['about']))
             ->orderBy('sort_order')
             ->get();
     }
@@ -28,7 +29,7 @@ class AboutPage extends Component
                 'layouts.public',
                 [
                     'title' => 'About',
-                    'description' => 'Learn Ventier’s story, values, and craftsmanship behind premium automotive car mats.',
+                    'description' => 'Learn Vantier’s story, values, and craftsmanship behind premium automotive car mats.',
                 ],
             );
     }

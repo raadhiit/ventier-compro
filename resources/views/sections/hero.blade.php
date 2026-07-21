@@ -27,7 +27,7 @@
 
             <div class="mt-10 flex flex-col gap-4 sm:flex-row" data-hero-action>
                 @if($section->cta_label && $section->cta_url)
-                    <a href="{{ $section->cta_url }}" class="inline-flex items-center justify-center rounded-full bg-brand-orange px-8 py-3 text-sm font-semibold text-brand-black transition hover:bg-brand-orange-soft focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-orange-soft">{{ $section->cta_label }}</a>
+                    <a href="{{ $section->cta_url }}" class="inline-flex items-center justify-center rounded-full bg-[#A86F45] px-8 py-3 text-sm font-semibold text-brand-black transition hover:bg-[#955f39] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#A86F45]">{{ $section->cta_label }}</a>
                 @endif
                 <a href="{{ route('contact') }}" wire:navigate class="inline-flex items-center justify-center rounded-full border border-white/18 px-8 py-3 text-sm font-semibold text-white transition hover:border-white/45 hover:bg-white/8 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-champagne">Konsultasi Produk</a>
             </div>

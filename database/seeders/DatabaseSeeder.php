@@ -23,6 +23,8 @@ class DatabaseSeeder extends Seeder
                 'name' => 'Test User',
                 'password' => bcrypt('password'),
                 'email_verified_at' => now(),
+                'role' => User::ROLE_SUPER_ADMIN,
+                'is_active' => true,
             ],
         );
 

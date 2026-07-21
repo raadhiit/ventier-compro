@@ -18,7 +18,7 @@ test('public routes render shared fallbacks when settings are empty', function (
 
     $this->get(route('contact'))
         ->assertSuccessful()
-        ->assertSee('Reach Vantier for product inquiries, partnership discussions, or support.')
+        ->assertSee('Start with product questions. Continue with the right fit.')
         ->assertDontSee('mailto:', false)
         ->assertDontSee('https://wa.me/', false);
 });
