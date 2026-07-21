@@ -60,6 +60,8 @@ class AppServiceProvider extends ServiceProvider
                 'layouts.public',
                 'livewire.pages.contact',
                 'livewire.contact-form',
+                'livewire.product-detail',
+                'livewire.product-gallery',
             ],
             function (View $view): void {
                 $view->with(

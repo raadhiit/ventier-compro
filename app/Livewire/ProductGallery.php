@@ -14,10 +14,12 @@ class ProductGallery extends Component
 
     public string $currentImage = '';
 
+    public string $productName = 'Product';
+
     /**
      * @param  Collection<int, ProductImage>  $images
      */
-    public function mount(Collection $images, ?string $thumbnail = null): void
+    public function mount(Collection $images, ?string $thumbnail = null, string $productName = 'Product'): void
     {
         $this->images = $images->values();
 
@@ -25,6 +27,7 @@ class ProductGallery extends Component
             ? ''
             : $this->images->first()->image_path;
 
+        $this->productName = $productName;
         $this->currentImage = $thumbnail ?: $firstImagePath;
     }
 

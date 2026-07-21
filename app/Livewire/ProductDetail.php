@@ -34,6 +34,9 @@ class ProductDetail extends Component
                     $this->product->product_category_id,
                 ),
             )
+            ->with('category')
+            ->orderByDesc('is_featured')
+            ->orderBy('sort_order')
             ->limit(3)
             ->get();
 
