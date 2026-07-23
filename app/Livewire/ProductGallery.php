@@ -14,6 +14,8 @@ class ProductGallery extends Component
 
     public string $currentImage = '';
 
+    public bool $previewOpen = false;
+
     public string $productName = 'Product';
 
     /**
@@ -34,6 +36,20 @@ class ProductGallery extends Component
     public function show(string $imagePath): void
     {
         $this->currentImage = $imagePath;
+    }
+
+    public function openPreview(): void
+    {
+        if ($this->currentImage === '') {
+            return;
+        }
+
+        $this->previewOpen = true;
+    }
+
+    public function closePreview(): void
+    {
+        $this->previewOpen = false;
     }
 
     public function render(): View

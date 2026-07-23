@@ -1,6 +1,7 @@
 <?php
 
 use App\Livewire\ProductCatalog;
+use App\Livewire\ProductGallery;
 use App\Models\Product;
 use App\Models\ProductCategory;
 use App\Models\ProductImage;
@@ -132,6 +133,35 @@ test('catalog shows filter empty state when no products match', function () {
         ->set('search', 'missing-keyword')
         ->assertSee('No products match this filter.')
         ->assertSee('Reset filters');
+});
+
+test('product gallery opens and closes main image preview', function () {
+    $product = makeProduct([
+        'name' => 'Preview Product',
+        'slug' => 'preview-product',
+        'thumbnail_path' => 'products/preview-thumbnail.webp',
+    ]);
+
+    $image = ProductImage::query()->create([
+        'product_id' => $product->id,
+        'image_path' => 'products/preview-detail.webp',
+        'alt_text' => 'Preview detail',
+        'sort_order' => 1,
+    ]);
+
+    Livewire::test(ProductGallery::class, [
+        'images' => $product->images()->get(),
+        'thumbnail' => $product->thumbnail_path,
+        'productName' => $product->name,
+    ])
+        ->assertSet('previewOpen', false)
+        ->assertSee('Open larger preview of Preview Product')
+        ->call('openPreview')
+        ->assertSet('previewOpen', true)
+        ->call('show', $image->image_path)
+        ->assertSet('currentImage', $image->image_path)
+        ->call('closePreview')
+        ->assertSet('previewOpen', false);
 });
 
 test('product detail safely handles legacy structured fields stored as strings', function () {
