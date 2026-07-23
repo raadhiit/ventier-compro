@@ -2,16 +2,18 @@
 
 use App\Models\HomeSection;
 use App\Models\Product;
+use App\Models\ProductCategory;
 
 beforeEach(function () {
     HomeSection::query()->delete();
     Product::query()->delete();
+    ProductCategory::query()->delete();
 });
 
 test('home shows useful fallback when no sections are visible', function () {
     $this->get(route('home'))
         ->assertSuccessful()
-        ->assertSee('Showroom sedang disiapkan. Brand, katalog, dan konsultasi tetap siap dilihat.')
+        ->assertSee('Our showroom is being prepared. Brand information, product catalog, and consultations remain available.')
         ->assertSee(route('products.index'), false)
         ->assertSee(route('contact'), false);
 });
@@ -85,55 +87,62 @@ test('home skips hidden, unsupported, and latest article sections', function () 
         ->assertDontSee('Hidden CTA');
 });
 
-test('featured products section only renders published featured products', function () {
+test('featured products section renders active product categories with catalog links', function () {
     HomeSection::query()->create([
         'section_key' => HomeSection::FEATURED_PRODUCTS,
         'title' => 'Featured picks',
         'is_visible' => true,
         'sort_order' => 0,
-        'settings' => ['limit' => 6],
+        'settings' => ['limit' => 4],
     ]);
 
-    Product::query()->create([
-        'name' => 'Published Featured',
-        'slug' => 'published-featured',
-        'status' => 'published',
-        'is_featured' => true,
-        'published_at' => now(),
+    ProductCategory::query()->create([
+        'name' => 'Sedan',
+        'slug' => 'sedan',
+        'is_active' => true,
+        'sort_order' => 1,
     ]);
 
-    Product::query()->create([
-        'name' => 'Draft Featured',
-        'slug' => 'draft-featured',
-        'status' => 'draft',
-        'is_featured' => true,
+    ProductCategory::query()->create([
+        'name' => 'SUV',
+        'slug' => 'suv',
+        'is_active' => true,
+        'sort_order' => 2,
     ]);
 
-    Product::query()->create([
-        'name' => 'Published Non Featured',
-        'slug' => 'published-non-featured',
-        'status' => 'published',
-        'is_featured' => false,
-        'published_at' => now(),
+    ProductCategory::query()->create([
+        'name' => 'MPV',
+        'slug' => 'mpv',
+        'is_active' => true,
+        'sort_order' => 3,
     ]);
 
-    Product::query()->create([
-        'name' => 'Future Featured',
-        'slug' => 'future-featured',
-        'status' => 'published',
-        'is_featured' => true,
-        'published_at' => now()->addDay(),
+    ProductCategory::query()->create([
+        'name' => 'Coupe',
+        'slug' => 'coupe',
+        'is_active' => true,
+        'sort_order' => 4,
+    ]);
+
+    ProductCategory::query()->create([
+        'name' => 'Hidden',
+        'slug' => 'hidden',
+        'is_active' => false,
+        'sort_order' => 5,
     ]);
 
     $this->get(route('home'))
         ->assertSuccessful()
-        ->assertSee('Published Featured')
-        ->assertDontSee('Draft Featured')
-        ->assertDontSee('Published Non Featured')
-        ->assertDontSee('Future Featured');
+        ->assertSee('Sedan')
+        ->assertSee('SUV')
+        ->assertSee('MPV')
+        ->assertSee('Coupe')
+        ->assertDontSee('Hidden')
+        ->assertSee(route('products.index', ['category' => 'sedan']), false)
+        ->assertSee(route('products.index', ['category' => 'suv']), false);
 });
 
-test('featured products section shows catalog fallback when no product is eligible', function () {
+test('featured products section shows catalog fallback when no category is available', function () {
     HomeSection::query()->create([
         'section_key' => HomeSection::FEATURED_PRODUCTS,
         'title' => 'Featured picks',
@@ -143,6 +152,6 @@ test('featured products section shows catalog fallback when no product is eligib
 
     $this->get(route('home'))
         ->assertSuccessful()
-        ->assertSee('Produk unggulan sedang disiapkan.')
+        ->assertSee('Product categories are being prepared.')
         ->assertSee(route('products.index'), false);
 });

@@ -3,7 +3,7 @@
 namespace App\Livewire;
 
 use App\Models\HomeSection;
-use App\Models\Product;
+use App\Models\ProductCategory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Collection;
 use Livewire\Component;
@@ -44,13 +44,12 @@ class Home extends Component
     /** @return array<string, mixed> */
     private function sectionData(HomeSection $section): array
     {
-        $limit = (int) data_get($section->settings, 'limit', 6);
+        $limit = (int) data_get($section->settings, 'limit', 4);
 
         return match ($section->section_key) {
             HomeSection::FEATURED_PRODUCTS => [
-                'products' => Product::query()
-                    ->published()
-                    ->where('is_featured', true)
+                'categories' => ProductCategory::query()
+                    ->where('is_active', true)
                     ->orderBy('sort_order')
                     ->limit($limit)
                     ->get(),

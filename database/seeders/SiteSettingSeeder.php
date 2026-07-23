@@ -13,9 +13,9 @@ class SiteSettingSeeder extends Seeder
             'brand_name' => 'Vantier',
             'whatsapp_number' => '+6281234567890',
             'email' => 'hello@vantier.com',
-            'footer_description' => 'Karpet mobil premium dengan desain presisi untuk perlindungan dan kenyamanan interior kendaraan.',
+            'footer_description' => 'Premium car mats designed for precise protection and interior comfort.',
             'default_seo_title' => 'Vantier — Premium Couture Carmat',
-            'default_seo_description' => 'Vantier menghadirkan karpet mobil premium dengan desain presisi, material berkualitas, dan perlindungan interior yang refined.',
+            'default_seo_description' => 'Vantier offers premium car mats with precise design, quality materials, and refined interior protection.',
         ];
 
         foreach ($settings as $key => $value) {

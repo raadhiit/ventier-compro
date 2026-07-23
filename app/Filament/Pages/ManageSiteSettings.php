@@ -52,7 +52,7 @@ class ManageSiteSettings extends Page
                         FileUpload::make('logo')
                             ->label('Light Logo')
                             ->helperText(
-                                'Logo putih atau terang untuk background gelap.',
+                                'White or light logo for dark backgrounds.',
                             )
                             ->image()
                             ->imageEditor()
@@ -64,7 +64,7 @@ class ManageSiteSettings extends Page
                         FileUpload::make('logo_dark')
                             ->label('Dark Logo')
                             ->helperText(
-                                'Logo hitam atau gelap untuk background terang.',
+                                'Black or dark logo for light backgrounds.',
                             )
                             ->image()
                             ->imageEditor()
@@ -86,7 +86,7 @@ class ManageSiteSettings extends Page
                         TextInput::make('whatsapp_number')
                             ->label('WhatsApp Number')
                             ->helperText(
-                                'Gunakan format internasional, contoh: +6281234567890.',
+                                'Use international format, for example: +6281234567890.',
                             )
                             ->tel()
                             ->maxLength(30),
@@ -150,7 +150,7 @@ class ManageSiteSettings extends Page
         }
 
         Notification::make()
-            ->title('Site settings berhasil diperbarui')
+            ->title('Site settings updated successfully')
             ->success()
             ->send();
     }

@@ -7,7 +7,7 @@
     }
 
     $whatsAppUrl = $whatsAppDigits !== ''
-        ? 'https://wa.me/'.$whatsAppDigits.'?text='.rawurlencode('Halo, saya ingin mengetahui lebih lanjut tentang '.$product->name.'.')
+        ? 'https://wa.me/'.$whatsAppDigits.'?text='.rawurlencode('Hello, I would like to learn more about '.$product->name.'.')
         : null;
 @endphp
 

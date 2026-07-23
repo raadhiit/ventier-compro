@@ -24,7 +24,7 @@ class PageContentForm
             ->components([
                 Section::make('Section Information')
                     ->description(
-                        'Pilih halaman dan section tempat konten ini ditampilkan.'
+                        'Select the page and section where this content appears.'
                     )
                     ->schema([
                         Select::make('page_key')
@@ -86,7 +86,7 @@ class PageContentForm
                             ->label('Visible')
                             ->default(true)
                             ->helperText(
-                                'Nonaktifkan untuk menyembunyikan section dari website.'
+                                'Disable to hide this section from the website.'
                             ),
 
                         TextInput::make('sort_order')
@@ -95,7 +95,7 @@ class PageContentForm
                             ->minValue(0)
                             ->default(0)
                             ->helperText(
-                                'Angka lebih kecil akan tampil lebih dulu.'
+                                'Lower numbers appear first.'
                             ),
                     ])
                     ->columnSpan(1),
@@ -112,7 +112,7 @@ class PageContentForm
                             ->maxLength(2048)
                             ->placeholder('/products')
                             ->helperText(
-                                'Boleh menggunakan URL internal seperti /products atau URL eksternal.'
+                                'Use an internal URL such as /products or an external URL.'
                             ),
                     ])
                     ->columns(2)
@@ -120,7 +120,7 @@ class PageContentForm
 
                 Section::make('Section Items')
                     ->description(
-                        'Gunakan untuk section berisi beberapa item, misalnya Brand Values atau Key Advantages.'
+                        'Use for sections containing multiple items, such as Brand Values or Key Advantages.'
                     )
                     ->schema([
                         Repeater::make('settings.items')

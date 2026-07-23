@@ -5,6 +5,7 @@ use App\Models\Product;
 use App\Models\ProductCategory;
 use App\Models\ProductImage;
 use App\Models\SiteSetting;
+use Illuminate\Support\Facades\DB;
 use Livewire\Livewire;
 
 beforeEach(function () {
@@ -56,7 +57,7 @@ test('catalog page shows only published non-future products', function () {
         ->assertDontSee('Future Product');
 });
 
-test('catalog filters by search and category', function () {
+test('catalog filters by search and category slug', function () {
     $sedan = makeCategory('Sedan');
     $suv = makeCategory('SUV');
 
@@ -76,11 +77,34 @@ test('catalog filters by search and category', function () {
         ->set('search', 'Sedan')
         ->assertSee('Executive Sedan Mat')
         ->assertDontSee('Adventure SUV Mat')
-        ->call('selectCategory', (string) $sedan->id)
+        ->call('resetFilters')
+        ->call('selectCategory', $sedan->slug)
         ->assertSee('Executive Sedan Mat')
         ->assertDontSee('Adventure SUV Mat')
         ->call('resetFilters')
         ->assertSee('Adventure SUV Mat');
+});
+
+test('catalog prefilters by category slug from query string', function () {
+    $sedan = makeCategory('Sedan');
+    $suv = makeCategory('SUV');
+
+    makeProduct([
+        'name' => 'Executive Sedan Mat',
+        'slug' => 'executive-sedan-mat',
+        'product_category_id' => $sedan->id,
+    ]);
+
+    makeProduct([
+        'name' => 'Adventure SUV Mat',
+        'slug' => 'adventure-suv-mat',
+        'product_category_id' => $suv->id,
+    ]);
+
+    $this->get(route('products.index', ['category' => $suv->slug]))
+        ->assertSuccessful()
+        ->assertSee('Adventure SUV Mat')
+        ->assertDontSee('Executive Sedan Mat');
 });
 
 test('catalog load more increases per page', function () {
@@ -108,6 +132,30 @@ test('catalog shows filter empty state when no products match', function () {
         ->set('search', 'missing-keyword')
         ->assertSee('No products match this filter.')
         ->assertSee('Reset filters');
+});
+
+test('product detail safely handles legacy structured fields stored as strings', function () {
+    $product = makeProduct([
+        'name' => 'Legacy Product',
+        'slug' => 'legacy-product',
+    ]);
+
+    DB::table('products')
+        ->where('id', $product->id)
+        ->update([
+            'features' => json_encode('Legacy feature'),
+            'specifications' => json_encode('Legacy specification'),
+        ]);
+
+    $product->refresh();
+
+    expect($product->features)->toBeArray()->toBeEmpty()
+        ->and($product->specifications)->toBeArray()->toBeEmpty();
+
+    $this->get(route('products.show', $product))
+        ->assertSuccessful()
+        ->assertDontSee('Built around daily protection.')
+        ->assertDontSee('Details at a glance.');
 });
 
 test('product detail renders seo, gallery, specifications, and related published products only', function () {

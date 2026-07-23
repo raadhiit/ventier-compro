@@ -2,6 +2,8 @@
     $hasFilters = filled($search) || filled($category);
 @endphp
 
+
+
 <div class="bg-surface-warm text-text-primary">
     <section class="relative overflow-hidden bg-brand-black px-5 pb-20 pt-32 text-white">
         <div class="absolute inset-0 bg-[radial-gradient(circle_at_82%_18%,_rgba(183,154,99,0.22),_transparent_32%),linear-gradient(135deg,_#0B0B0B_0%,_#171717_58%,_#0B0B0B_100%)]"></div>
@@ -48,10 +50,10 @@
                             All products
                         </button>
                         @foreach($categories as $productCategory)
-                            <button type="button" wire:key="catalog-category-{{ $productCategory->id }}" wire:click="selectCategory('{{ $productCategory->id }}')" @class([
+                            <button type="button" wire:key="catalog-category-{{ $productCategory->id }}" wire:click="selectCategory('{{ $productCategory->slug }}')" @class([
                                 'shrink-0 rounded-full border px-5 py-2.5 text-sm font-semibold transition',
-                                'border-brand-black bg-brand-black text-white' => (string) $category === (string) $productCategory->id,
-                                'border-border-sand bg-white text-text-secondary hover:border-champagne hover:text-text-primary' => (string) $category !== (string) $productCategory->id,
+                                'border-brand-black bg-brand-black text-white' => $category === $productCategory->slug,
+                                'border-border-sand bg-white text-text-secondary hover:border-champagne hover:text-text-primary' => $category !== $productCategory->slug,
                             ])>
                                 {{ $productCategory->name }}
                             </button>

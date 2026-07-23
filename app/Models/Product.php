@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Attributes\Scope;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -33,11 +34,27 @@ class Product extends Model
     protected function casts(): array
     {
         return [
-            'specifications' => 'array',
-            'features' => 'array',
             'is_featured' => 'boolean',
             'published_at' => 'datetime',
         ];
+    }
+
+    /** @return Attribute<array<string|int, mixed>, string> */
+    protected function specifications(): Attribute
+    {
+        return Attribute::make(
+            get: fn (mixed $value): array => self::normalizeStructuredField($value),
+            set: fn (mixed $value): string => json_encode(self::normalizeStructuredField($value), JSON_THROW_ON_ERROR),
+        );
+    }
+
+    /** @return Attribute<array<int, mixed>, string> */
+    protected function features(): Attribute
+    {
+        return Attribute::make(
+            get: fn (mixed $value): array => array_values(self::normalizeStructuredField($value)),
+            set: fn (mixed $value): string => json_encode(array_values(self::normalizeStructuredField($value)), JSON_THROW_ON_ERROR),
+        );
     }
 
     protected static function boot(): void
@@ -52,6 +69,22 @@ class Product extends Model
                 $product->seo_description = Str::limit($product->short_description ?: strip_tags($product->description), 160);
             }
         });
+    }
+
+    /** @return array<string, mixed>|array<int, mixed> */
+    private static function normalizeStructuredField(mixed $value): array
+    {
+        if (is_array($value)) {
+            return $value;
+        }
+
+        if (! is_string($value) || trim($value) === '') {
+            return [];
+        }
+
+        $decoded = json_decode($value, true);
+
+        return is_array($decoded) ? $decoded : [];
     }
 
     /** @return BelongsTo<ProductCategory, $this> */

@@ -70,18 +70,18 @@ class ProductForm
                     ->columnSpan(1),
                 Toggle::make('is_featured')
                     ->label('Featured Product')
-                    ->helperText('Tampilkan produk ini di halaman utama.')
+                    ->helperText('Show this product on the home page.')
                     ->inline(false)
                     ->columnSpan(1),
                 TextInput::make('sort_order')
                     ->label('Sort Order')
-                    ->helperText('Angka kecil tampil lebih dulu.')
+                    ->helperText('Lower numbers appear first.')
                     ->numeric()
                     ->default(0)
                     ->columnSpan(1),
                 DateTimePicker::make('published_at')
                     ->label('Published At')
-                    ->helperText('Kosongkan jika belum ingin tayang.')
+                    ->helperText('Leave blank until ready to publish.')
                     ->columnSpan(1),
                 Repeater::make('images')
                     ->relationship('images')
@@ -95,7 +95,7 @@ class ProductForm
                             ->required(),
                         TextInput::make('alt_text')
                             ->label('Alt Text')
-                            ->helperText('Deskripsi singkat gambar untuk aksesibilitas.')
+                            ->helperText('Brief image description for accessibility.')
                             ->maxLength(255),
                         TextInput::make('sort_order')
                             ->label('Sort Order')

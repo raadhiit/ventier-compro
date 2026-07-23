@@ -17,25 +17,40 @@
                 @endif
 
                 <div class="mt-10 divide-y divide-white/10 border-y border-white/10">
-                    <article class="grid gap-4 py-7 sm:grid-cols-[80px_1fr]" data-reveal>
-                        <p class="text-sm font-semibold text-champagne">01</p>
+                    <article class="grid gap-5 py-7 sm:grid-cols-[72px_1fr]" data-reveal>
+                        <div class="flex size-14 items-center justify-center rounded-2xl border border-champagne/20 bg-champagne/10 text-champagne">
+                            <svg class="size-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75m5.25 2.625a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                            </svg>
+                        </div>
                         <div>
-                            <h3 class="text-xl font-semibold">Material premium</h3>
-                            <p class="mt-2 text-sm leading-7 text-white/55">Komposisi material dipilih untuk daya tahan, kemudahan perawatan, dan tampilan interior yang rapi.</p>
+                            <h3 class="text-xl font-semibold">Premium Materials</h3>
+                            <p class="mt-2 max-w-xl text-sm leading-7 text-white/55">Durable, easy-care materials with a refined interior finish.</p>
                         </div>
                     </article>
-                    <article class="grid gap-4 py-7 sm:grid-cols-[80px_1fr]" data-reveal>
-                        <p class="text-sm font-semibold text-champagne">02</p>
+
+                    <article class="grid gap-5 py-7 sm:grid-cols-[72px_1fr]" data-reveal>
+                        <div class="flex size-14 items-center justify-center rounded-2xl border border-champagne/20 bg-champagne/10 text-champagne">
+                            <svg class="size-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12a7.5 7.5 0 0 1 7.5-7.5h7.5V12A7.5 7.5 0 1 1 4.5 12Z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v7.5h7.5" />
+                            </svg>
+                        </div>
                         <div>
-                            <h3 class="text-xl font-semibold">Presisi kendaraan</h3>
-                            <p class="mt-2 text-sm leading-7 text-white/55">Bentuk dan coverage diarahkan pada fitment yang lebih meyakinkan, bukan produk generik satu ukuran.</p>
+                            <h3 class="text-xl font-semibold">Precise Fitment</h3>
+                            <p class="mt-2 max-w-xl text-sm leading-7 text-white/55">Vehicle-specific coverage instead of a generic one-size shape.</p>
                         </div>
                     </article>
-                    <article class="grid gap-4 py-7 sm:grid-cols-[80px_1fr]" data-reveal>
-                        <p class="text-sm font-semibold text-champagne">03</p>
+
+                    <article class="grid gap-5 py-7 sm:grid-cols-[72px_1fr]" data-reveal>
+                        <div class="flex size-14 items-center justify-center rounded-2xl border border-champagne/20 bg-champagne/10 text-champagne">
+                            <svg class="size-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 3l7.5 4.5v4.75c0 4.28-2.912 8.232-7.5 9.75-4.588-1.518-7.5-5.47-7.5-9.75V7.5L12 3Z" />
+                            </svg>
+                        </div>
                         <div>
-                            <h3 class="text-xl font-semibold">Proteksi yang refined</h3>
-                            <p class="mt-2 text-sm leading-7 text-white/55">Fungsi proteksi tetap utama, disampaikan lewat detail visual dan finishing yang tidak berlebihan.</p>
+                            <h3 class="text-xl font-semibold">Refined Protection</h3>
+                            <p class="mt-2 max-w-xl text-sm leading-7 text-white/55">Daily protection delivered through clean detailing and restrained finishing.</p>
                         </div>
                     </article>
                 </div>

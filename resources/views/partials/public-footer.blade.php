@@ -21,7 +21,7 @@
     $whatsAppUrl = $whatsAppDigits !== '' ? 'https://wa.me/'.$whatsAppDigits : null;
 @endphp
 
-<footer class="border-t border-white/10 bg-brand-black">
+<footer class="relative z-20 border-t border-white/10 bg-brand-black">
     <div class="mx-auto grid max-w-7xl gap-12 px-6 py-16 md:grid-cols-2 lg:grid-cols-[1.4fr_0.8fr_1fr] lg:px-10">
         <div>
             @if ($logo)

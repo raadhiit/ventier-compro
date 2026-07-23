@@ -22,7 +22,7 @@ class HomeSectionForm
                     ->label('Section')
                     ->options(HomeSection::sectionOptions())
                     ->required()
-                    ->helperText('Pilih bagian homepage yang ingin diatur.')
+                    ->helperText('Select the home page section to configure.')
                     ->columnSpan(1),
                 TextInput::make('title')
                     ->maxLength(255)
@@ -42,26 +42,26 @@ class HomeSectionForm
                 TextInput::make('cta_label')
                     ->label('CTA Label')
                     ->maxLength(255)
-                    ->helperText('Teks tombol, contoh: Lihat Produk.')
+                    ->helperText('Button text, for example: View Products.')
                     ->columnSpan(1),
                 TextInput::make('cta_url')
                     ->label('CTA URL')
                     ->maxLength(255)
-                    ->helperText('Link tujuan tombol, contoh: /products.')
+                    ->helperText('Button destination URL, for example: /products.')
                     ->columnSpan(2),
                 KeyValue::make('settings')
-                    ->helperText('Opsional. Pakai hanya untuk pengaturan khusus section.')
+                    ->helperText('Optional. Use only for section-specific settings.')
                     ->columnSpan(3),
                 Toggle::make('is_visible')
                     ->label('Visible')
                     ->default(true)
-                    ->helperText('Matikan untuk menyembunyikan section dari homepage.')
+                    ->helperText('Disable to hide this section from the home page.')
                     ->columnSpan(1),
                 TextInput::make('sort_order')
                     ->label('Sort Order')
                     ->numeric()
                     ->default(0)
-                    ->helperText('Angka kecil tampil lebih dulu.')
+                    ->helperText('Lower numbers appear first.')
                     ->columnSpan(1),
             ]);
     }

@@ -5,6 +5,7 @@ namespace App\Livewire;
 use App\Models\Product;
 use App\Models\ProductCategory;
 use Illuminate\Contracts\View\View;
+use Livewire\Attributes\Url;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -14,6 +15,7 @@ class ProductCatalog extends Component
 
     public string $search = '';
 
+    #[Url]
     public ?string $category = null;
 
     public int $perPage = 12;
@@ -55,7 +57,10 @@ class ProductCatalog extends Component
                     ->orWhere('slug', 'like', "%{$this->search}%")
                     ->orWhere('short_description', 'like', "%{$this->search}%");
             }))
-            ->when($this->category, fn ($query) => $query->where('product_category_id', $this->category))
+            ->when($this->category, fn ($query) => $query->whereHas('category', function ($query) {
+                $query->where('slug', $this->category)
+                    ->where('is_active', true);
+            }))
             ->orderByDesc('is_featured')
             ->orderBy('sort_order')
             ->latest()

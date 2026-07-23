@@ -31,7 +31,7 @@ class ArticleForm
                     ->readOnly()
                     ->helperText('Autofilled from the article title.'),
                 TextInput::make('excerpt')
-                    ->helperText('Ringkasan singkat artikel (1-2 kalimat). Tampil di daftar artikel dan hasil pencarian Google.')
+                    ->helperText('Brief article summary (1–2 sentences). Shown in article listings and Google search results.')
                     ->columnSpan(3),
                 RichEditor::make('body')
                     ->required()
@@ -61,7 +61,7 @@ class ArticleForm
                 Toggle::make('is_featured')
                     ->label('Featured')
                     ->inline(true)
-                    ->helperText('Akan menampilkan artikel ini di halaman utama jika diaktifkan.'),
+                    ->helperText('Show this article on the home page when enabled.'),
             ]);
     }
 }

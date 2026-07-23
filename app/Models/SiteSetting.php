@@ -12,9 +12,9 @@ class SiteSetting extends Model
     /** @var array<string, string> */
     public const DEFAULTS = [
         'brand_name' => 'Vantier',
-        'footer_description' => 'Karpet mobil premium dengan desain presisi untuk perlindungan dan kenyamanan interior kendaraan.',
+        'footer_description' => 'Premium car mats designed for precise protection and interior comfort.',
         'default_seo_title' => 'Vantier — Premium Couture Carmat',
-        'default_seo_description' => 'Vantier menghadirkan karpet mobil premium dengan desain presisi, material berkualitas, dan perlindungan interior yang refined.',
+        'default_seo_description' => 'Vantier offers premium car mats with precise design, quality materials, and refined interior protection.',
     ];
 
     protected $fillable = ['key', 'value', 'type'];

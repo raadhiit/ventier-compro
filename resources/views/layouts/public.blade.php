@@ -30,6 +30,8 @@
 
         <title>{{ $pageTitle }}</title>
         <meta name="description" content="{{ $pageDescription }}">
+        <link rel="icon" href="{{ asset('icon/logo.png') }}?v=3" type="image/png">
+        <link rel="apple-touch-icon" href="{{ asset('icon/logo.png') }}?v=3">
         <link rel="canonical" href="{{ $canonicalUrl }}">
 
         <meta property="og:site_name" content="{{ $brandName }}">
@@ -63,7 +65,7 @@
 
         <main
             @class([
-                'min-h-screen',
+                'relative z-10 min-h-screen',
                 'pt-20' => ! request()->routeIs('home'),
             ])
         >
