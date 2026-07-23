@@ -4,11 +4,11 @@ namespace App\Filament\Resources\HomeSections\Schemas;
 
 use App\Models\HomeSection;
 use Filament\Forms\Components\FileUpload;
-use Filament\Forms\Components\KeyValue;
 use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
+use Filament\Schemas\Components\Utilities\Get;
 use Filament\Schemas\Schema;
 
 class HomeSectionForm
@@ -22,6 +22,7 @@ class HomeSectionForm
                     ->label('Section')
                     ->options(HomeSection::sectionOptions())
                     ->required()
+                    ->live()
                     ->helperText('Select the home page section to configure.')
                     ->columnSpan(1),
                 TextInput::make('title')
@@ -49,9 +50,15 @@ class HomeSectionForm
                     ->maxLength(255)
                     ->helperText('Button destination URL, for example: /products.')
                     ->columnSpan(2),
-                KeyValue::make('settings')
-                    ->helperText('Optional. Use only for section-specific settings.')
-                    ->columnSpan(3),
+                TextInput::make('settings.limit')
+                    ->label('Number of categories')
+                    ->numeric()
+                    ->minValue(1)
+                    ->maxValue(4)
+                    ->default(4)
+                    ->visible(fn (Get $get): bool => $get('section_key') === HomeSection::FEATURED_PRODUCTS)
+                    ->helperText('Show 1 to 4 category cards on the homepage.')
+                    ->columnSpan(1),
                 Toggle::make('is_visible')
                     ->label('Visible')
                     ->default(true)

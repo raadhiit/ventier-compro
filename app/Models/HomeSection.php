@@ -14,8 +14,6 @@ class HomeSection extends Model
 
     public const ABOUT_PREVIEW = 'about_preview';
 
-    public const LATEST_ARTICLES = 'latest_articles';
-
     public const CTA = 'cta';
 
     /** @return array<string, string> */
@@ -26,7 +24,6 @@ class HomeSection extends Model
             self::FEATURED_PRODUCTS => 'Featured Products',
             self::BENEFITS => 'Benefits',
             self::ABOUT_PREVIEW => 'About Preview',
-            self::LATEST_ARTICLES => 'Latest Articles',
             self::CTA => 'Call to Action',
         ];
     }

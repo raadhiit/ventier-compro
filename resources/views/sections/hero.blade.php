@@ -19,7 +19,7 @@
                 <p class="text-xs font-semibold uppercase tracking-[0.42em] text-champagne" data-hero-eyebrow>Premium Couture Carmat</p>
 
                 @if($section->title)
-                    <h1 class="mt-6 max-w-4xl text-5xl font-semibold leading-[0.98] tracking-[-0.04em] text-white sm:text-6xl lg:text-7xl" data-hero-title>{{ $section->title }}</h1>
+                    <h1 class="mt-6 max-w-3xl text-[2.75rem] font-semibold leading-[0.98] tracking-[-0.04em] text-[#F7F4ED] sm:text-[3.5rem] lg:text-[4rem]" data-hero-title>{{ $section->title }}</h1>
                 @endif
 
                 <div class="mt-10 flex flex-col gap-4 sm:flex-row" data-hero-action>

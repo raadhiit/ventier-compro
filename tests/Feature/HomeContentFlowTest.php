@@ -50,19 +50,12 @@ test('home renders visible supported sections in sort order', function () {
         ]);
 });
 
-test('home skips hidden, unsupported, and latest article sections', function () {
+test('home skips hidden and unsupported sections', function () {
     HomeSection::query()->create([
         'section_key' => HomeSection::HERO,
         'title' => 'Visible hero',
         'is_visible' => true,
         'sort_order' => 0,
-    ]);
-
-    HomeSection::query()->create([
-        'section_key' => HomeSection::LATEST_ARTICLES,
-        'title' => 'Should stay hidden',
-        'is_visible' => true,
-        'sort_order' => 1,
     ]);
 
     HomeSection::query()->create([
@@ -82,7 +75,6 @@ test('home skips hidden, unsupported, and latest article sections', function () 
     $this->get(route('home'))
         ->assertSuccessful()
         ->assertSee('Visible hero')
-        ->assertDontSee('Should stay hidden')
         ->assertDontSee('Unsafe include')
         ->assertDontSee('Hidden CTA');
 });

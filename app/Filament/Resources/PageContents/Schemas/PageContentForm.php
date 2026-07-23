@@ -4,7 +4,6 @@ namespace App\Filament\Resources\PageContents\Schemas;
 
 use App\Models\PageContent;
 use Filament\Forms\Components\FileUpload;
-use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
@@ -116,43 +115,6 @@ class PageContentForm
                             ),
                     ])
                     ->columns(2)
-                    ->columnSpan(3),
-
-                Section::make('Section Items')
-                    ->description(
-                        'Use for sections containing multiple items, such as Brand Values or Key Advantages.'
-                    )
-                    ->schema([
-                        Repeater::make('settings.items')
-                            ->label('Items')
-                            ->schema([
-                                TextInput::make('title')
-                                    ->label('Item Title')
-                                    ->required()
-                                    ->maxLength(255),
-
-                                Textarea::make('description')
-                                    ->label('Description')
-                                    ->rows(3)
-                                    ->columnSpanFull(),
-
-                                FileUpload::make('image_path')
-                                    ->label('Icon or Image')
-                                    ->image()
-                                    ->disk('public')
-                                    ->directory('page-contents/items')
-                                    ->visibility('public')
-                                    ->columnSpanFull(),
-                            ])
-                            ->columns(2)
-                            ->defaultItems(0)
-                            ->reorderable()
-                            ->collapsible()
-                            ->itemLabel(
-                                fn (array $state): ?string => $state['title'] ?? null
-                            )
-                            ->columnSpanFull(),
-                    ])
                     ->columnSpan(3),
             ]);
     }

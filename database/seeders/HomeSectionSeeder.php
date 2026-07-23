@@ -23,7 +23,7 @@ class HomeSectionSeeder extends Seeder
                 'section_key' => 'featured_products',
                 'title' => 'Featured Products',
                 'subtitle' => 'A curated selection of premium products for your vehicle.',
-                'settings' => ['limit' => 6],
+                'settings' => ['limit' => 4],
                 'is_visible' => true,
                 'sort_order' => 1,
             ],
@@ -46,20 +46,13 @@ class HomeSectionSeeder extends Seeder
                 'sort_order' => 3,
             ],
             [
-                'section_key' => 'latest_articles',
-                'title' => 'Latest Articles',
-                'settings' => ['limit' => 3],
-                'is_visible' => true,
-                'sort_order' => 4,
-            ],
-            [
                 'section_key' => 'cta',
                 'title' => 'Contact Us',
                 'subtitle' => 'Have a question or need assistance? The Vantier team is ready to help.',
                 'cta_label' => 'Contact Us on WhatsApp',
                 'cta_url' => 'https://wa.me/6281234567890',
                 'is_visible' => true,
-                'sort_order' => 5,
+                'sort_order' => 4,
             ],
         ];
 

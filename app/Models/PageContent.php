@@ -8,7 +8,6 @@ class PageContent extends Model
 {
     public const PAGE_OPTIONS = [
         'about' => 'About Us',
-        'contact' => 'Contact',
     ];
 
     public const SECTION_OPTIONS = [
@@ -18,11 +17,6 @@ class PageContent extends Model
             'values' => 'Our Values',
             'advantages' => 'Why Choose Vantier',
             'cta' => 'Call to Action',
-        ],
-
-        'contact' => [
-            'hero' => 'Hero',
-            'intro' => 'Introduction',
         ],
     ];
 
