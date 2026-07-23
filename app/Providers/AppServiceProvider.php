@@ -62,6 +62,7 @@ class AppServiceProvider extends ServiceProvider
                 'livewire.contact-form',
                 'livewire.product-detail',
                 'livewire.product-gallery',
+                'errors.404',
             ],
             function (View $view): void {
                 $view->with(

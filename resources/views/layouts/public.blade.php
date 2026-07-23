@@ -26,6 +26,15 @@
                     ? $pageOgImage
                     : \Illuminate\Support\Facades\Storage::disk('public')->url($pageOgImage)
                 : null;
+            $globalStructuredData = [
+                '@context' => 'https://schema.org',
+                '@type' => 'Organization',
+                'name' => $brandName,
+                'url' => route('home'),
+                'email' => filled($siteSettings['email'] ?? null) ? $siteSettings['email'] : null,
+                'sameAs' => filled($siteSettings['instagram_url'] ?? null) ? [$siteSettings['instagram_url']] : null,
+            ];
+            $globalStructuredData = array_filter($globalStructuredData, fn (mixed $value): bool => $value !== null);
         @endphp
 
         <title>{{ $pageTitle }}</title>
@@ -51,6 +60,8 @@
         @if ($ogImageUrl)
             <meta name="twitter:image" content="{{ $ogImageUrl }}">
         @endif
+
+        <script type="application/ld+json">{!! json_encode($structuredData ?? $globalStructuredData, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) !!}</script>
 
         @vite([
             'resources/css/app.css',
