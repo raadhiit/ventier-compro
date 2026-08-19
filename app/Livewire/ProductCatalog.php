@@ -69,9 +69,13 @@ class ProductCatalog extends Component
         $categories = ProductCategory::query()
             ->where('is_active', true)
             ->orderBy('sort_order')
+            ->withCount(['products as published_products_count' => fn ($query) => $query->published()])
+            ->with('thumbnail')
             ->get();
 
-        return view('livewire.product-catalog', compact('products', 'categories'))
+        $showCategoryBrowse = blank($this->category) && blank($this->search);
+
+        return view('livewire.product-catalog', compact('products', 'categories', 'showCategoryBrowse'))
             ->layout(
                 'layouts.public',
                 [

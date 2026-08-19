@@ -66,48 +66,95 @@
                 </div>
             </div>
 
-            <div class="mt-12 grid gap-6 md:grid-cols-2 xl:grid-cols-3" wire:loading.class="opacity-60">
-                @forelse($products as $product)
-                    <article wire:key="product-{{ $product->id }}" class="group overflow-hidden rounded-[2rem] border border-border-sand bg-white transition duration-500 hover:-translate-y-1 hover:shadow-xl hover:shadow-black/5" data-reveal>
-                        <a href="{{ route('products.show', $product) }}" wire:navigate class="block aspect-square overflow-hidden bg-brand-carbon">
-                            @if($product->thumbnail_path)
-                                <img src="{{ Storage::disk('public')->url($product->thumbnail_path) }}" alt="{{ $product->name }}" width="1200" height="1200" loading="lazy" class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105">
+            @if($showCategoryBrowse)
+                <div class="mt-12 grid gap-6 md:grid-cols-2 xl:grid-cols-3" wire:loading.class="opacity-60">
+                    @forelse($categories as $productCategory)
+                        @php
+                            $isAvailable = $productCategory->published_products_count > 0;
+                        @endphp
+                        <article wire:key="catalog-category-card-{{ $productCategory->id }}" @class([
+                            'group overflow-hidden rounded-[2rem] border border-border-sand bg-white transition duration-500',
+                            'hover:-translate-y-1 hover:shadow-xl hover:shadow-black/5' => $isAvailable,
+                            'opacity-60' => ! $isAvailable,
+                        ])>
+                            @if($isAvailable)
+                                <button type="button" wire:click="selectCategory('{{ $productCategory->slug }}')" class="block aspect-square w-full overflow-hidden bg-brand-carbon">
+                                    @if($productCategory->thumbnail)
+                                        <img src="{{ Storage::disk('public')->url($productCategory->thumbnail->thumbnail_path) }}" alt="{{ $productCategory->name }}" width="1200" height="1200" loading="lazy" class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105">
+                                    @else
+                                        <div class="grid h-full place-items-center bg-[radial-gradient(circle_at_top,_rgba(183,154,99,0.18),_transparent_44%),linear-gradient(180deg,_#262626_0%,_#171717_100%)] p-8 text-center text-sm text-white/55">Category visual coming soon</div>
+                                    @endif
+                                </button>
                             @else
-                                <div class="grid h-full place-items-center bg-[radial-gradient(circle_at_top,_rgba(183,154,99,0.18),_transparent_44%),linear-gradient(180deg,_#262626_0%,_#171717_100%)] p-8 text-center text-sm text-white/55">Product visual coming soon</div>
+                                <div class="relative block aspect-square w-full overflow-hidden bg-brand-carbon">
+                                    @if($productCategory->thumbnail)
+                                        <img src="{{ Storage::disk('public')->url($productCategory->thumbnail->thumbnail_path) }}" alt="{{ $productCategory->name }}" width="1200" height="1200" loading="lazy" class="h-full w-full object-cover grayscale">
+                                    @else
+                                        <div class="grid h-full place-items-center bg-[radial-gradient(circle_at_top,_rgba(183,154,99,0.18),_transparent_44%),linear-gradient(180deg,_#262626_0%,_#171717_100%)] p-8 text-center text-sm text-white/55">Category visual coming soon</div>
+                                    @endif
+                                    <span class="absolute right-4 top-4 rounded-full bg-brand-black/70 px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-white/85">Coming soon</span>
+                                </div>
                             @endif
-                        </a>
-                        <div class="p-7">
-                            <div class="flex items-center justify-between gap-4">
-                                <p class="text-xs font-semibold uppercase tracking-[0.26em] text-champagne-dark">{{ $product->category?->name ?? 'Product' }}</p>
-                                @if($product->is_featured)
-                                    <span class="rounded-full bg-brand-orange/15 px-3 py-1 text-xs font-semibold text-brand-black">Featured</span>
+                            <div class="p-7">
+                                <h2 class="text-2xl font-semibold leading-tight text-text-primary">{{ $productCategory->name }}</h2>
+                                @if($isAvailable)
+                                    <button type="button" wire:click="selectCategory('{{ $productCategory->slug }}')" class="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-champagne-dark transition hover:text-champagne-hover">Browse category <span aria-hidden="true">→</span></button>
+                                @else
+                                    <p class="mt-3 text-sm leading-7 text-text-secondary">Products for this category are on the way.</p>
                                 @endif
                             </div>
-                            <h2 class="mt-4 text-2xl font-semibold leading-tight text-text-primary">{{ $product->name }}</h2>
-                            @if($product->short_description)
-                                <p class="mt-3 text-sm leading-7 text-text-secondary">{{ $product->short_description }}</p>
-                            @endif
-                            <a href="{{ route('products.show', $product) }}" wire:navigate class="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-champagne-dark transition hover:text-champagne-hover">View detail <span aria-hidden="true">→</span></a>
+                        </article>
+                    @empty
+                        <div class="col-span-full rounded-[2rem] border border-border-sand bg-white px-6 py-16 text-center" data-reveal>
+                            <p class="text-2xl font-semibold text-text-primary">Product catalog is being prepared.</p>
+                            <p class="mx-auto mt-3 max-w-xl text-sm leading-7 text-text-secondary">Published categories will appear here once ready in the CMS.</p>
                         </div>
-                    </article>
-                @empty
-                    <div class="col-span-full rounded-[2rem] border border-border-sand bg-white px-6 py-16 text-center" data-reveal>
-                        <p class="text-2xl font-semibold text-text-primary">{{ $hasFilters ? 'No products match this filter.' : 'Product catalog is being prepared.' }}</p>
-                        <p class="mx-auto mt-3 max-w-xl text-sm leading-7 text-text-secondary">{{ $hasFilters ? 'Try another search term or category to continue browsing.' : 'Published products will appear here once ready in the CMS.' }}</p>
-                        @if($hasFilters)
-                            <button type="button" wire:click="resetFilters" class="mt-7 rounded-full bg-brand-black px-7 py-3 text-sm font-semibold text-white transition hover:bg-brand-carbon">Reset filters</button>
-                        @endif
-                    </div>
-                @endforelse
-            </div>
-
-            @if($products->hasMorePages())
-                <div class="mt-12 text-center">
-                    <button wire:click="loadMore" wire:loading.attr="disabled" class="inline-flex h-13 items-center justify-center rounded-full bg-brand-black px-8 text-sm font-semibold text-white transition hover:bg-brand-carbon disabled:opacity-60">
-                        <span wire:loading.remove>Load more products</span>
-                        <span wire:loading>Loading...</span>
-                    </button>
+                    @endforelse
                 </div>
+            @else
+                <div class="mt-12 grid gap-6 md:grid-cols-2 xl:grid-cols-3" wire:loading.class="opacity-60">
+                    @forelse($products as $product)
+                        <article wire:key="product-{{ $product->id }}" class="group overflow-hidden rounded-[2rem] border border-border-sand bg-white transition duration-500 hover:-translate-y-1 hover:shadow-xl hover:shadow-black/5" data-reveal>
+                            <a href="{{ route('products.show', $product) }}" wire:navigate class="block aspect-square overflow-hidden bg-brand-carbon">
+                                @if($product->thumbnail_path)
+                                    <img src="{{ Storage::disk('public')->url($product->thumbnail_path) }}" alt="{{ $product->name }}" width="1200" height="1200" loading="lazy" class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105">
+                                @else
+                                    <div class="grid h-full place-items-center bg-[radial-gradient(circle_at_top,_rgba(183,154,99,0.18),_transparent_44%),linear-gradient(180deg,_#262626_0%,_#171717_100%)] p-8 text-center text-sm text-white/55">Product visual coming soon</div>
+                                @endif
+                            </a>
+                            <div class="p-7">
+                                <div class="flex items-center justify-between gap-4">
+                                    <p class="text-xs font-semibold uppercase tracking-[0.26em] text-champagne-dark">{{ $product->category?->name ?? 'Product' }}</p>
+                                    @if($product->is_featured)
+                                        <span class="rounded-full bg-brand-orange/15 px-3 py-1 text-xs font-semibold text-brand-black">Featured</span>
+                                    @endif
+                                </div>
+                                <h2 class="mt-4 text-2xl font-semibold leading-tight text-text-primary">{{ $product->name }}</h2>
+                                @if($product->short_description)
+                                    <p class="mt-3 text-sm leading-7 text-text-secondary">{{ $product->short_description }}</p>
+                                @endif
+                                <a href="{{ route('products.show', $product) }}" wire:navigate class="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-champagne-dark transition hover:text-champagne-hover">View detail <span aria-hidden="true">→</span></a>
+                            </div>
+                        </article>
+                    @empty
+                        <div class="col-span-full rounded-[2rem] border border-border-sand bg-white px-6 py-16 text-center" data-reveal>
+                            <p class="text-2xl font-semibold text-text-primary">{{ $hasFilters ? 'No products match this filter.' : 'Product catalog is being prepared.' }}</p>
+                            <p class="mx-auto mt-3 max-w-xl text-sm leading-7 text-text-secondary">{{ $hasFilters ? 'Try another search term or category to continue browsing.' : 'Published products will appear here once ready in the CMS.' }}</p>
+                            @if($hasFilters)
+                                <button type="button" wire:click="resetFilters" class="mt-7 rounded-full bg-brand-black px-7 py-3 text-sm font-semibold text-white transition hover:bg-brand-carbon">Reset filters</button>
+                            @endif
+                        </div>
+                    @endforelse
+                </div>
+
+                @if($products->hasMorePages())
+                    <div class="mt-12 text-center">
+                        <button wire:click="loadMore" wire:loading.attr="disabled" class="inline-flex h-13 items-center justify-center rounded-full bg-brand-black px-8 text-sm font-semibold text-white transition hover:bg-brand-carbon disabled:opacity-60">
+                            <span wire:loading.remove>Load more products</span>
+                            <span wire:loading>Loading...</span>
+                        </button>
+                    </div>
+                @endif
             @endif
         </div>
     </section>

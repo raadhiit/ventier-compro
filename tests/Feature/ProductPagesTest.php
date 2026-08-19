@@ -46,16 +46,37 @@ function makeProduct(array $attributes = []): Product
 }
 
 test('catalog page shows only published non-future products', function () {
-    $visibleProduct = makeProduct(['name' => 'Visible Product', 'slug' => 'visible-product']);
-    makeProduct(['name' => 'Draft Product', 'slug' => 'draft-product', 'status' => 'draft', 'published_at' => null]);
-    makeProduct(['name' => 'Future Product', 'slug' => 'future-product', 'published_at' => now()->addDay()]);
+    $category = makeCategory();
 
-    $this->get(route('products.index'))
+    $visibleProduct = makeProduct(['name' => 'Visible Product', 'slug' => 'visible-product', 'product_category_id' => $category->id]);
+    makeProduct(['name' => 'Draft Product', 'slug' => 'draft-product', 'status' => 'draft', 'published_at' => null, 'product_category_id' => $category->id]);
+    makeProduct(['name' => 'Future Product', 'slug' => 'future-product', 'published_at' => now()->addDay(), 'product_category_id' => $category->id]);
+
+    $this->get(route('products.index', ['category' => $category->slug]))
         ->assertSuccessful()
         ->assertSee('Visible Product')
         ->assertSee(route('products.show', $visibleProduct), false)
         ->assertDontSee('Draft Product')
         ->assertDontSee('Future Product');
+});
+
+test('catalog shows category browse cards by default with coming soon state for empty categories', function () {
+    $sedan = makeCategory('Sedan');
+    $suv = makeCategory('SUV');
+
+    makeProduct([
+        'name' => 'Executive Sedan Mat',
+        'slug' => 'executive-sedan-mat',
+        'product_category_id' => $sedan->id,
+    ]);
+
+    Livewire::test(ProductCatalog::class)
+        ->assertSee('Sedan')
+        ->assertSee('SUV')
+        ->assertSee('Coming soon')
+        ->assertDontSee('Executive Sedan Mat')
+        ->call('selectCategory', $sedan->slug)
+        ->assertSee('Executive Sedan Mat');
 });
 
 test('catalog filters by search and category slug', function () {
@@ -83,7 +104,9 @@ test('catalog filters by search and category slug', function () {
         ->assertSee('Executive Sedan Mat')
         ->assertDontSee('Adventure SUV Mat')
         ->call('resetFilters')
-        ->assertSee('Adventure SUV Mat');
+        ->assertSee('Sedan')
+        ->assertSee('SUV')
+        ->assertDontSee('Adventure SUV Mat');
 });
 
 test('catalog prefilters by category slug from query string', function () {
@@ -118,6 +141,7 @@ test('catalog load more increases per page', function () {
     }
 
     Livewire::test(ProductCatalog::class)
+        ->set('search', 'Catalog Product')
         ->assertDontSee('Catalog Product 13')
         ->call('loadMore')
         ->assertSee('Catalog Product 13');

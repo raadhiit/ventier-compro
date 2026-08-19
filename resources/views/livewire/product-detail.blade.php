@@ -22,12 +22,12 @@
                 <span class="text-champagne-dark" aria-current="page">{{ $product->name }}</span>
             </nav>
 
-            <div class="mt-10 grid gap-12 lg:grid-cols-[1.08fr_0.92fr] lg:items-start">
+            <div class="mt-10 grid gap-12 lg:grid-cols-[auto_1fr] lg:items-start">
                 <div data-reveal>
                     <livewire:product-gallery :images="$product->images" :thumbnail="$product->thumbnail_path" :product-name="$product->name" />
                 </div>
 
-                <div class="lg:sticky lg:top-28" data-reveal>
+                <div class="max-w-xl lg:sticky lg:top-28" data-reveal x-data="{ copied: false }">
                     <p class="text-xs font-semibold uppercase tracking-[0.32em] text-champagne-dark">{{ $product->category?->name ?? 'Premium product' }}</p>
                     <h1 class="mt-4 text-4xl font-semibold leading-[1.02] tracking-[-0.035em] sm:text-5xl lg:text-6xl">{{ $product->name }}</h1>
                     @if($product->short_description)
@@ -48,7 +48,22 @@
                         <a href="{{ route('contact') }}" wire:navigate class="inline-flex items-center justify-center rounded-full border border-black/12 px-8 py-3 text-sm font-semibold text-text-primary transition hover:bg-white">Contact team</a>
                     </div>
 
-                    <p class="mt-5 text-xs leading-6 text-text-muted">Product inquiry only. No cart or checkout required.</p>
+                    <div class="mt-6 flex items-center justify-between gap-4 border-t border-border-sand pt-5">
+                        <p class="text-xs leading-6 text-text-muted">Product inquiry only. No cart or checkout required.</p>
+                        <button
+                            type="button"
+                            x-on:click="navigator.clipboard.writeText(window.location.href); copied = true; setTimeout(() => copied = false, 2000)"
+                            class="inline-flex shrink-0 items-center gap-1.5 text-xs font-semibold text-text-secondary transition hover:text-text-primary"
+                        >
+                            <svg x-show="!copied" class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" />
+                            </svg>
+                            <svg x-show="copied" x-cloak class="size-4 text-champagne-dark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+                            </svg>
+                            <span x-text="copied ? 'Link copied' : 'Share'"></span>
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>

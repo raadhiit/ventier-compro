@@ -12,6 +12,9 @@ class ProductGallery extends Component
     /** @var Collection<int, ProductImage> */
     public Collection $images;
 
+    /** @var array<int, array{path: string, alt: string}> */
+    public array $thumbnails = [];
+
     public string $currentImage = '';
 
     public bool $previewOpen = false;
@@ -24,12 +27,28 @@ class ProductGallery extends Component
     public function mount(Collection $images, ?string $thumbnail = null, string $productName = 'Product'): void
     {
         $this->images = $images->values();
+        $this->productName = $productName;
+
+        $thumbnails = collect();
+
+        if ($thumbnail) {
+            $thumbnails->push(['path' => $thumbnail, 'alt' => $productName]);
+        }
+
+        foreach ($this->images as $image) {
+            if ($image->image_path === $thumbnail) {
+                continue;
+            }
+
+            $thumbnails->push(['path' => $image->image_path, 'alt' => $image->alt_text ?: $productName]);
+        }
+
+        $this->thumbnails = $thumbnails->values()->all();
 
         $firstImagePath = $this->images->isEmpty()
             ? ''
             : $this->images->first()->image_path;
 
-        $this->productName = $productName;
         $this->currentImage = $thumbnail ?: $firstImagePath;
     }
 

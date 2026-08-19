@@ -101,25 +101,6 @@
         </button>
     </nav>
 
-    <div class="border-t border-white/10 md:hidden">
-        <div class="mx-auto flex max-w-7xl gap-4 overflow-x-auto px-6 py-3 text-sm text-white/75 md:hidden">
-            @foreach ($navigationItems as $item)
-                <a
-                    href="{{ route($item['route']) }}"
-                    wire:navigate
-                    @if (request()->routeIs($item['active'])) aria-current="page" @endif
-                    @class([
-                        'shrink-0 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-champagne',
-                        'text-champagne' => request()->routeIs($item['active']),
-                        'hover:text-white' => ! request()->routeIs($item['active']),
-                    ])
-                >
-                    {{ $item['label'] }}
-                </a>
-            @endforeach
-        </div>
-    </div>
-
     <div
         id="mobile-navigation"
         x-cloak
