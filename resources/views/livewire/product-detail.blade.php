@@ -116,9 +116,9 @@
                 <div class="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
                     @foreach($relatedProducts as $relatedProduct)
                         <article wire:key="related-{{ $relatedProduct->id }}" class="group overflow-hidden rounded-[2rem] border border-border-sand bg-white transition duration-500 hover:-translate-y-1 hover:shadow-xl hover:shadow-black/5" data-reveal>
-                            <a href="{{ route('products.show', $relatedProduct) }}" wire:navigate class="block aspect-[4/3] overflow-hidden bg-brand-carbon">
+                            <a href="{{ route('products.show', $relatedProduct) }}" wire:navigate class="block aspect-square overflow-hidden bg-brand-carbon">
                                 @if($relatedProduct->thumbnail_path)
-                                    <img src="{{ Storage::disk('public')->url($relatedProduct->thumbnail_path) }}" alt="{{ $relatedProduct->name }}" width="1200" height="1500" loading="lazy" class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105">
+                                    <img src="{{ Storage::disk('public')->url($relatedProduct->thumbnail_path) }}" alt="{{ $relatedProduct->name }}" width="1200" height="1200" loading="lazy" class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105">
                                 @else
                                     <div class="grid h-full place-items-center bg-[radial-gradient(circle_at_top,_rgba(183,154,99,0.18),_transparent_44%),linear-gradient(180deg,_#262626_0%,_#171717_100%)] text-sm text-white/55">Product visual</div>
                                 @endif

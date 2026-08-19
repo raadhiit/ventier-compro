@@ -53,6 +53,7 @@ class ProductForm
                     ->columnSpan(1),
                 FileUpload::make('thumbnail_path')
                     ->label('Thumbnail Image')
+                    ->helperText('Used for catalog and related product cards, displayed as a square. Upload a square image (e.g. 1200x1200px) with the product centered so nothing important sits near the edges.')
                     ->directory('products/thumbnails')
                     ->image()
                     ->disk('public')

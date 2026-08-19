@@ -69,9 +69,9 @@
             <div class="mt-12 grid gap-6 md:grid-cols-2 xl:grid-cols-3" wire:loading.class="opacity-60">
                 @forelse($products as $product)
                     <article wire:key="product-{{ $product->id }}" class="group overflow-hidden rounded-[2rem] border border-border-sand bg-white transition duration-500 hover:-translate-y-1 hover:shadow-xl hover:shadow-black/5" data-reveal>
-                        <a href="{{ route('products.show', $product) }}" wire:navigate class="block aspect-[4/3] overflow-hidden bg-brand-carbon">
+                        <a href="{{ route('products.show', $product) }}" wire:navigate class="block aspect-square overflow-hidden bg-brand-carbon">
                             @if($product->thumbnail_path)
-                                <img src="{{ Storage::disk('public')->url($product->thumbnail_path) }}" alt="{{ $product->name }}" width="1200" height="1500" loading="lazy" class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105">
+                                <img src="{{ Storage::disk('public')->url($product->thumbnail_path) }}" alt="{{ $product->name }}" width="1200" height="1200" loading="lazy" class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105">
                             @else
                                 <div class="grid h-full place-items-center bg-[radial-gradient(circle_at_top,_rgba(183,154,99,0.18),_transparent_44%),linear-gradient(180deg,_#262626_0%,_#171717_100%)] p-8 text-center text-sm text-white/55">Product visual coming soon</div>
                             @endif
