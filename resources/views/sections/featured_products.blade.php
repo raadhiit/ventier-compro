@@ -20,7 +20,7 @@
                             <div class="mt-12 flex flex-1 flex-col">
                                 <p class="text-xs font-semibold uppercase tracking-[0.28em] text-champagne-dark">Product category</p>
                                 <h3 class="mt-3 min-h-[3.75rem] text-2xl font-semibold leading-tight text-text-primary">{{ $category->name }}</h3>
-                                <p class="mt-3 min-h-[5.25rem] line-clamp-3 text-sm leading-7 text-text-secondary">{{ $category->description }}</p>
+                                <div class="mt-3 min-h-[5.25rem] line-clamp-3 text-sm leading-7 text-text-secondary [&_p]:m-0">{!! $category->description !!}</div>
                                 <span class="mt-auto inline-flex items-center gap-2 pt-6 text-sm font-semibold text-champagne-dark transition-colors group-hover:text-champagne-hover">Explore category <span aria-hidden="true">→</span></span>
                             </div>
                         </a>
